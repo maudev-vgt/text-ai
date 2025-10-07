@@ -1,0 +1,89 @@
+:root {
+    --primary: rgb(106, 63, 175);
+    --primary-lg: rgb(185, 114, 213);
+
+    --secondary: '';
+    --secondary-lg: ''
+}
+
+@font-face {
+    font-family: dmsans;
+    src: url(dmsans.ttf);
+}
+
+.container {
+    margin: 10px 50px;
+    padding: 5px 10px 0px 5px;
+    font-family: dmsans;
+    color: gray;
+}
+
+.container.text-center {
+    text-align: center;
+}
+
+.container button,
+.container .btn {
+    background-color: var(--primary);
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    padding: 5px 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.container button:hover,
+.container .btn:hover {
+    background-color: var(--primary-lg);
+}
+
+.hidden {
+    display: none
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top-width: 0px;
+    border-top-style: none;
+    border-top-color: currentcolor;
+    border-top: 1px solid rgba(193, 189, 189, 0.72);
+
+}
+
+.selector {
+    border-color: red;
+    color: red;
+    background-color: rgb(132, 1, 184) !important;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+ul.pop-link li a {
+    color: rgb(83, 83, 83);
+    text-decoration: none;
+}
+
+#main {
+    min-width: 280px;
+
+}
+
+
+
+footer {
+    height: 200px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #ededed;
+
+}

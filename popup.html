@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextAI</title>
+
+    <link rel="stylesheet" href="src/style.css">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- FontAwersome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+    <div id="welcome" class="container text-center">
+        <p data-bind="welcomeText"></p>
+        <hr>
+        <div class="input-group">
+            <input class="form-control" type="text" class="token" placeholder="" id="groq-token"
+                data-bind="yourTokenHere">
+
+            <button id="set-token" class="btn is-success" data-bind="save"></button>
+        </div>
+
+        <hr>
+
+        <p data-bind="groqAccount"></p>
+
+    </div>
+
+    <div id="main" class="hidden">
+        <div class="container is-fluid">
+            <div class="field">
+                <div class="control form-check form-switch">
+                    <label class="checkbox" for="improve">
+                        <input id="improve" class="selector form-check-input" type="radio" value="improve"
+                            name="selector" checked>
+                        <span data-bind="improve"></span>
+                    </label>
+
+                </div>
+
+            </div>
+            <div class="field">
+                <div class="control form-check form-switch">
+                    <label class="checkbox" for="translate">
+                        <input id="translate" class="selector form-check-input" type="radio" value="translate"
+                            name="selector">
+                        <span data-bind="translate"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="field">
+                <div class="control form-check form-switch">
+                    <label class="checkbox" for="explain">
+                        <input id="explain" class="selector form-check-input" type="radio" value="explain"
+                            name="selector">
+                        <span data-bind="explain"></span>
+                    </label>
+                </div>
+
+            </div>
+
+
+        </div>
+        <hr>
+        <div class="container text-center">
+            <a id="set-action" class="btn is-success" data-bind="save"></a>
+        </div>
+        <hr>
+        <div class="container footer">
+
+            <ul class="pop-link">
+                <li>
+                    <a id="get-config" href="config.html" target="_blank" ><i class="fa-solid fa-wrench"></i> Config</a>
+                </li>
+                <li>
+                    |
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-circle-info"></i> Help</a>
+
+                </li>
+                <li>
+                    |
+                </li>
+                <li>
+                    <a href="#"><i class="fa-solid fa-address-card"></i> About</a>
+
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <script src="src/popup.js"></script>
+    <script src="src/i18n/en_us.js"></script>
+    <script src="src/i18n/pt_br.js"></script>
+    <script src="src/i18n/zh_tw.js"></script>
+    <script src="src/language.js"></script>
+
+</body>
+
+</html>
