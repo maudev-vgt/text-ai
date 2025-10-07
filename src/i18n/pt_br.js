@@ -9,7 +9,9 @@ function ptBr() {
         explain:"explicar",
         save:"salvar",
         yourTokenHere:"seu token aqui",
-
+        choiceAFunction:"Escolha uma função",
+        help:"Ajuda",
+        config:"Config",
         //ai instructions
 
         improve_instruction: "Reescreva o texto abaixo deixando ele mais claro, coerente e fluido, mantendo o sentido original",

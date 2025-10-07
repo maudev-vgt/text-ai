@@ -9,7 +9,9 @@ function enUs() {
         explain: "explain",
         save:"save",
         yourTokenHere:"Grok Token",
-
+        choiceAFunction:"Choice a function",
+        help:"help",
+        config:"Config",
         //ai instruction
 
         improve_instruction: "Rewrite the text below to make it clearer, more coherent and fluid, while maintaining the original meaning.",

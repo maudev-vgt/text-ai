@@ -39,6 +39,9 @@
 
     <div id="main" class="hidden">
         <div class="container is-fluid">
+            <div class="field mb-4">
+                <h5 class="text-center" data-bind="choiceAFunction"></h5>
+            </div>
             <div class="field">
                 <div class="control form-check form-switch">
                     <label class="checkbox" for="improve">
@@ -85,22 +88,22 @@
 
         <ul class="pop-link">
             <li>
-                <a id="get-config" href="config.html" target="_blank"><i class="fa-solid fa-wrench"></i> Config</a>
+                <a id="get-config" href="config.html" target="_blank"><i class="fa-solid fa-wrench" ></i> <span data-bind="config"></span></a>
             </li>
             <li>
                 |
             </li>
             <li>
-                <a href="help.html" target="_blank"><i class="fa-solid fa-circle-info"></i> Help</a>
+                <a href="help.html" target="_blank"><i class="fa-solid fa-circle-info"></i><span data-bind="help"></span></a>
 
             </li>
-            <li>
+            <!-- <li>
                 |
             </li>
             <li>
                 <a href="#"><i class="fa-solid fa-address-card"></i> About</a>
 
-            </li>
+            </li> -->
         </ul>
 
     </div>

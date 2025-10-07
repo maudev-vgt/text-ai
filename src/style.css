@@ -11,6 +11,10 @@
     src: url(dmsans.ttf);
 }
 
+#content{
+    height: 100vh;
+}
+
 .container {
     margin: 10px 50px;
     padding: 5px 10px 0px 5px;
@@ -62,7 +66,7 @@ hr {
     background-color: rgb(132, 1, 184) !important;
 }
 
-ul {
+ul.pop-link {
     list-style: none;
     padding-left: 0px !important;
     display: flex;
@@ -80,13 +84,11 @@ ul.pop-link li a {
 
 }
 
-
-
 footer {
     height: 200px;
-    position: absolute;
+    /* position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 100%; */
     background-color: #ededed;
 
 }

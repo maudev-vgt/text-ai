@@ -9,7 +9,9 @@ function zhTw() {
         explain:"解释",
         save:"节省",
         yourTokenHere:"您的代币在这里",
-
+        choiceAFunction:"选择角色",
+        help:"帮助",
+        config:"设置",
         //ai instructions
 
         improve_instruction: "重写下面的文本，使其更清晰、更连贯、更流畅，同时保持原来的含义。",
