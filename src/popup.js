@@ -18,6 +18,8 @@ const popup = {
 
         popup.dispachEvent('save-config', 'click', popup.saveConfig);
 
+        popup.currentDate();
+
 
     },
     async saveData(type, data) {
@@ -146,6 +148,14 @@ const popup = {
         browser.runtime.reload();
 
 
+    },
+    currentDate(){
+        let date = new Date();
+        let year = date.getFullYear();
+        if(document.getElementById('year')){
+            document.getElementById('year').innerHTML = year;
+
+        }
     }
 };
 
