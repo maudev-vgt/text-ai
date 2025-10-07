@@ -31,7 +31,7 @@
                 TextAi
             </a>
 
-            Configuration
+            <span data-bind="configuration"></span>
         </div>
     </nav>
 
@@ -44,15 +44,15 @@
             <div class="container">
 
                 <div class="form-group mt-4">
-                    <label for="" class="form-label">API Token</label>
+                    <label for="" class="form-label" data-bind="apiToken"></label>
                     <input type="password" class="form-control" id="groq-token-config">
                 </div>
                 <div class="form-group mt-4">
-                    <label for="" class="form-label">Language</label>
+                    <label for="" class="form-label" data-bind="language"></label>
                     <select id="language" class="form-control">
-                        <option value="en-US">English</option>
-                        <option value="pt-BR">Portuguese</option>
-                        <option value="zh-TW">Chinese</option>
+                        <option value="en-US" data-bind="english" ></option>
+                        <option value="pt-BR" data-bind="portuguese" ></option>
+                        <option value="zh-TW" data-bind="chinese" ></option>
                         <!-- <option value="es">Spanish</option> -->
                     </select>
                 </div>

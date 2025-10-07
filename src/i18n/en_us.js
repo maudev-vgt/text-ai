@@ -12,12 +12,26 @@ function enUs() {
         choiceAFunction:"Choice a function",
         help:"help",
         config:"Config",
+
         //ai instruction
 
         improve_instruction: "Rewrite the text below to make it clearer, more coherent and fluid, while maintaining the original meaning.",
         translate_instruction: "Translate the text below into Portuguese, maintaining the original tone and context.",
         explain_instruction: "Write an explanatory summary of the following text, highlighting the main points.",
-        general_instruction: "and respond only with the corrected text, without comments, explanations or additional sentences"
+        general_instruction: "and respond only with the corrected text, without comments, explanations or additional sentences",
 
+
+        // config page
+
+        configuration:"Configuration",
+        language:"Language",
+        apiToken:"API Token",
+        english:"English",
+        portuguese:"Portuguese",
+        chinese:"Mandarin",
+
+        // Help page
+
+        Help:"Help"
     }
 }

@@ -12,13 +12,26 @@ function ptBr() {
         choiceAFunction:"Escolha uma função",
         help:"Ajuda",
         config:"Config",
+        
         //ai instructions
 
         improve_instruction: "Reescreva o texto abaixo deixando ele mais claro, coerente e fluido, mantendo o sentido original",
         translate_instruction: "Traduza o texto abaixo para português, mantendo o tom e o contexto originais",
         explain_instruction: "Faça um resumo explicativo do texto a seguir, destacando os pontos principais",
-        general_instruction: "e responda apenas com o texto corrigido, sem comentários, explicações ou frases adicionais"
+        general_instruction: "e responda apenas com o texto corrigido, sem comentários, explicações ou frases adicionais",
 
+        // config page
+
+        configuration:"Configurações",
+        language:"Linguagem",
+        apiToken:"API Token",
+        english:"Inglês",
+        portuguese:"Português",
+        chinese:"Mandarim",
+
+        // Help page
+
+        Help:"Ajuda"
 
 
     }
