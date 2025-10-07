@@ -67,6 +67,9 @@ const popup = {
 
             if (!document.getElementById(res.action)) {
                 document.getElementById('improve').checked = true;
+
+                popup.saveData('action', 'improve');
+
             } else {
                 document.getElementById(res.action).checked = true;
 
@@ -137,7 +140,7 @@ const popup = {
         let token = document.getElementById('groq-token-config');
         let language = document.getElementById('language');
 
-        popup.saveData('token', token.value);
+        popup.saveData('groq_token', token.value);
         popup.saveData('language', language.value);
 
         browser.runtime.reload();

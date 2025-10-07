@@ -30,6 +30,9 @@
     padding: 5px 15px;
     border: none;
     cursor: pointer;
+}
+
+.button-large{
     width: 100%;
 }
 
