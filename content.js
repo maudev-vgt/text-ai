@@ -81,26 +81,24 @@ document.addEventListener("mouseup", (e) => {
     if (oldMenu) oldMenu.remove();
 
     const menu = document.createElement("div");
-    const span = document.createElement("span");
     const img = document.createElement("img");
     const text = document.createElement("span")
 
     img.src = browser.runtime.getURL('mind.png');
     img.className = "textai-logo";
     img.style.height = "16px"
-    img.verticalAlign = "middle";
-    img.marginRight = "5px";
+    img.style.verticalAlign = "middle";
+    img.style.marginRight = "5px";
+    img.style.marginRight = "10px;"
 
     let label = library.labelParse(translate['AnswerAi']);
 
-    text.innerHTML = ` <span>${label}</span>`
+    text.innerHTML = ` ${label}`
 
-    span.appendChild(img)
-    span.appendChild(text)
-
+    menu.appendChild(img);
+    menu.appendChild(text)
 
     menu.className = "mini-menu";
-
 
     menu.style.position = "absolute";
     menu.style.top = `${e.pageY + 5}px`;
@@ -112,7 +110,12 @@ document.addEventListener("mouseup", (e) => {
     menu.style.cursor = "pointer";
     menu.style.zIndex = "999999";
     menu.style.fontFamily = "sans-serif";
-    menu.appendChild(span);
+    menu.style.display = "flex";
+    menu.style.flexDirection = "row";
+    menu.style.alignItems = "center";
+
+
+    // menu.appendChild(span);
 
     menu.addEventListener("click", () => {
 
