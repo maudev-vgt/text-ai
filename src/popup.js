@@ -11,31 +11,17 @@ const popup = {
 
         // save token
 
-        popup.dispachEvent('set-token', 'click', popup.setToken);
+        library.dispachEvent('set-token', 'click', popup.setToken);
 
-        popup.dispachEvent('set-action', 'click', popup.setAction);
+        library.dispachEvent('set-action', 'click', popup.setAction);
 
-        popup.dispachEvent('save-config', 'click', popup.saveConfig);
+        library.dispachEvent('save-config', 'click', popup.saveConfig);
 
-        popup.currentDate();
+        library.currentDate();
 
-
-    },
-    async saveData(type, data) {
-
-        let obj = {};
-        let key = type;
-        obj[key] = data
-
-        await browser.storage.local.set(obj);
 
     },
-    async getData(type) {
-        if (browser.storage.local.get(type)) {
-            return await browser.storage.local.get(type);
-        }
-    },
-    deteData(type) {
+    deleteData(type) {
 
         browser.storage.local.remove(type)
 
@@ -52,7 +38,7 @@ const popup = {
 
     },
     loadUserData() {
-        popup.getData('groq_token').then(function (res) {
+        library.getData('groq_token').then(function (res) {
 
             if (res.groq_token) {
                 document.getElementById('welcome').classList.add('hidden');
@@ -64,12 +50,12 @@ const popup = {
 
         });
 
-        popup.getData('action').then(function (res) {
+        library.getData('action').then(function (res) {
 
             if (!document.getElementById(res.action)) {
                 document.getElementById('improve').checked = true;
 
-                popup.saveData('action', 'improve');
+                library.saveData('action', 'improve');
 
             } else {
                 document.getElementById(res.action).checked = true;
@@ -82,40 +68,45 @@ const popup = {
     },
     loadSettingsData() {
 
-        popup.getData('groq_token').then(function (res) {
+        library.getData('groq_token').then(function (res) {
 
-            if (res.groq_token) {
-                document.getElementById('groq-token-config').value = helper.encryptDecryptString(res.groq_token, true);
+            if (res.groq_token && document.getElementById('groq-token-config')) {
+                // if(document.getElementById('groq-token-config')){
+                    document.getElementById('groq-token-config').value = library.encryptDecryptString(res.groq_token, true);
+                // }
+                    
             }
 
         });
 
-        popup.getData('language').then(function (res) {
+        library.getData('language').then(function (res) {
 
-            if (res.language) {
-                document.getElementById('language').value = res.language;
+            if (res.language && document.getElementById('language')) {
+                // if(){
+                    document.getElementById('language').value = res.language;
+
+                // }
 
             }
 
         });
 
     },
-    dispachEvent(selector, event, handler) {
+    // dispachEvent(selector, event, handler) {
 
-        const el = document.getElementById(selector);
-        if (!el) return;
-        el.addEventListener(event, handler);
+    //     const el = document.getElementById(selector);
+    //     if (!el) return;
+    //     el.addEventListener(event, handler);
 
-    },
+    // },
     setToken() {
 
         let input = document.getElementById('groq-token');
 
         if (input.value.length > 0) {
 
-            popup.saveData('groq_token', helper.encryptDecryptString(input.value));
-            // popup.saveData('groq_token', btoa(input.value));
-            popup.saveData('action', 'improve');
+            library.saveData('groq_token', library.encryptDecryptString(input.value));
+            library.saveData('action', 'improve');
             browser.runtime.reload();
         }
         else {
@@ -130,7 +121,7 @@ const popup = {
         selector.forEach(function (el) {
             if (el.checked) {
 
-                popup.saveData('action', el.value)
+                library.saveData('action', el.value)
 
             }
         });
@@ -142,21 +133,21 @@ const popup = {
         let token = document.getElementById('groq-token-config');
         let language = document.getElementById('language');
 
-        popup.saveData('groq_token', btoa(token.value));
-        popup.saveData('language', language.value);
+        library.saveData('groq_token', btoa(token.value));
+        library.saveData('language', language.value);
 
         browser.runtime.reload();
 
 
-    },
-    currentDate() {
-        let date = new Date();
-        let year = date.getFullYear();
-        if (document.getElementById('year')) {
-            document.getElementById('year').innerHTML = year;
-
-        }
     }
+    // currentDate() {
+    //     let date = new Date();
+    //     let year = date.getFullYear();
+    //     if (document.getElementById('year')) {
+    //         document.getElementById('year').innerHTML = year;
+
+    //     }
+    // }
 };
 
 

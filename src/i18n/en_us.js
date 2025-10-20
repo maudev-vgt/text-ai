@@ -32,6 +32,10 @@ function enUs() {
 
         // Help page
 
-        Help:"Help"
+        Help:"Help",
+
+        // voice command 
+
+        AnswerAi:"Talk to Textai"
     }
 }

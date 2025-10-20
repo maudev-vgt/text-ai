@@ -31,7 +31,11 @@ function zhTw() {
 
         // Help page
 
-        Help:"帮助"
+        Help:"帮助",
+
+        // voice command 
+
+        AnswerAi:"与 Textai 交谈"
 
 
     }

@@ -31,7 +31,12 @@ function ptBr() {
 
         // Help page
 
-        Help:"Ajuda"
+        Help:"Ajuda",
+
+
+        // voice command 
+
+        AnswerAi:"Pergunte ao TextAi"
 
 
     }

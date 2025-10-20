@@ -15,7 +15,7 @@ const language = {
     },
     async getLanguage() {
 
-        const res = await popup.getData('language');
+        const res = await library.getData('language');
 
         let currentLang = res.language ? res.language : navigator.language;
 
@@ -31,8 +31,8 @@ const language = {
                 break;
         }
 
-        await popup.saveData('language', currentLang);
-        await popup.saveData('i18n', JSON.stringify(language.translations));
+        await library.saveData('language', currentLang);
+        await library.saveData('i18n', JSON.stringify(language.translations));
     },
     applyTranslator(key) {
         const elements = document.querySelectorAll(`[data-bind="${key}"]`);

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TextAI",
-  "version": "1.5",
+  "version": "1.9",
   "description": "Enhance and refine your texts with artificial intelligence",
   "icons": {
     "48": "mind.png"
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/helper.js","content.js"]
+      "js": ["src/library.js","content.js"]
     }
   ],
     "background": {

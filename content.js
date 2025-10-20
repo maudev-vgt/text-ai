@@ -8,9 +8,9 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     browser.storage.local.get('action').then(function (action) {
       browser.storage.local.get('groq_token').then(function (token) {
 
-        let selection = helper.getSelectedText();
+        let selection = library.getSelectedText();
 
-        helper.getInstructions(action.action).then(function (instructions) {
+        library.getInstructions(action.action).then(function (instructions) {
 
 
           let systemMessage = [
@@ -23,13 +23,13 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           }]
 
           let messages = [...systemMessage, ...userMessage];
-  
+
 
           let options = {
             method: "post",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${helper.encryptDecryptString(token.groq_token, true)}`
+              "Authorization": `Bearer ${library.encryptDecryptString(token.groq_token, true)}`
             },
             body: JSON.stringify({
               "messages": messages,
@@ -44,7 +44,7 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           }
 
 
-          helper.makeRequest(options, groqUrl).then(function (res) {
+          library.makeRequest(options, groqUrl).then(function (res) {
 
             let response = res.choices[0].message;
 
@@ -68,91 +68,113 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 document.addEventListener("mouseup", (e) => {
-  const selection = helper.getSelectedText();
-  if (!selection) return;
 
-  let oldMenu = document.querySelector(".mini-menu");
-  if (oldMenu) oldMenu.remove();
+  browser.storage.local.get('i18n').then(function (res) {
 
-  const menu = document.createElement("div");
-  
-  menu.className = "mini-menu";
-  menu.innerHTML = `
-  <img src="${browser.runtime.getURL('mind.png')}" 
-       style="width:16px; height:16px; vertical-align:middle; margin-right:5px;">
-  <span>Pergunte ao TextAi</span>
-  `;
-  
-  menu.style.position = "absolute";
-  menu.style.top = `${e.pageY + 5}px`;
-  menu.style.left = `${e.pageX + 5}px`;
-  menu.style.background = "#333";
-  menu.style.color = "#fff";
-  menu.style.padding = "5px 10px";
-  menu.style.borderRadius = "6px";
-  menu.style.cursor = "pointer";
-  menu.style.zIndex = "999999";
-  menu.style.fontFamily = "sans-serif";
+    let { i18n } = res;
+    let translate = JSON.parse(i18n);
 
-  menu.addEventListener("click", () => {
+    const selection = library.getSelectedText();
+    if (!selection) return;
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "pt-BR";
-    recognition.start();
+    let oldMenu = document.querySelector(".mini-menu");
+    if (oldMenu) oldMenu.remove();
 
-    recognition.onresult = (event) => {
-      browser.storage.local.get('groq_token').then(function (token) {
-        const text = event.results[0][0].transcript;
+    const menu = document.createElement("div");
+    const span = document.createElement("span");
+    const img = document.createElement("img");
+    const text = document.createElement("span")
 
-        console.log(text);
+    img.src = browser.runtime.getURL('mind.png');
+    img.className = "textai-logo";
+    img.style.height = "16px"
+    img.verticalAlign = "middle";
+    img.marginRight = "5px";
 
-        let systemMessage = [
-          { "role": "system", "content": text }
-        ];
+    let label = library.labelParse(translate['AnswerAi']);
 
-        let userMessage = [{
-          "role": "user",
-          "content": selection
-        }]
+    text.innerHTML = ` <span>${label}</span>`
 
-        let messages = [...systemMessage, ...userMessage];
-
-        let options = {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${helper.encryptDecryptString(token.groq_token, true)}`
-          },
-          body: JSON.stringify({
-            "messages": messages,
-            "temperature": 0.5,
-            "model": groqModel,
-            "stop": null,
-            "stream": false
-
-          })
+    span.appendChild(img)
+    span.appendChild(text)
 
 
-        }
+    menu.className = "mini-menu";
 
 
-        helper.makeRequest(options, groqUrl).then(function (res) {
+    menu.style.position = "absolute";
+    menu.style.top = `${e.pageY + 5}px`;
+    menu.style.left = `${e.pageX + 5}px`;
+    menu.style.background = "#333";
+    menu.style.color = "#fff";
+    menu.style.padding = "5px 10px";
+    menu.style.borderRadius = "6px";
+    menu.style.cursor = "pointer";
+    menu.style.zIndex = "999999";
+    menu.style.fontFamily = "sans-serif";
+    menu.appendChild(span);
 
-          let response = res.choices[0].message;
+    menu.addEventListener("click", () => {
 
-          alert(response.content);
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = "pt-BR";
+      recognition.start();
 
-          menu.remove();
+      recognition.onresult = (event) => {
+        browser.storage.local.get('groq_token').then(function (token) {
+          const text = event.results[0][0].transcript;
+
+          let systemMessage = [
+            { "role": "system", "content": text }
+          ];
+
+          let userMessage = [{
+            "role": "user",
+            "content": selection
+          }]
+
+          let messages = [...systemMessage, ...userMessage];
+
+          let options = {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${library.encryptDecryptString(token.groq_token, true)}`
+            },
+            body: JSON.stringify({
+              "messages": messages,
+              "temperature": 0.5,
+              "model": groqModel,
+              "stop": null,
+              "stream": false
+
+            })
+
+
+          }
+
+
+          library.makeRequest(options, groqUrl).then(function (res) {
+
+            let response = res.choices[0].message;
+
+            alert(response.content);
+
+            menu.remove();
+          });
+
+
         });
+      };
+
+    });
+
+    document.body.appendChild(menu);
 
 
-      });
-    };
+  })
 
-  });
-
-  document.body.appendChild(menu);
 });
 
 document.addEventListener("mousedown", (e) => {

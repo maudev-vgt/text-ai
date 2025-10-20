@@ -1,9 +1,7 @@
-const helper = {
-    teste: 'ola mundo',
-
+const library = {
     init: () => {
 
-        console.log('helper load');
+        console.log('library load');
 
 
     },
@@ -68,13 +66,45 @@ const helper = {
             return window.getSelection().toString();
         }
 
+    },
+    async saveData(type, data) {
+
+        let obj = {};
+        let key = type;
+        obj[key] = data
+
+        await browser.storage.local.set(obj);
+
+    },
+    async getData(type) {
+        if (browser.storage.local.get(type)) {
+            return await browser.storage.local.get(type);
+        }
+    },
+    currentDate() {
+        let date = new Date();
+        let year = date.getFullYear();
+        if (document.getElementById('year')) {
+            document.getElementById('year').innerHTML = year;
+
+        }
+    },
+    dispachEvent(selector, event, handler) {
+
+        const el = document.getElementById(selector);
+        if (!el) return;
+        el.addEventListener(event, handler);
+
+    },
+    labelParse(text) {
+        return text.charAt(0).toUpperCase() + text.slice(1);
     }
 };
 
 (function () {
 
     'use strict';
-    helper.init()
+    library.init()
 
 })();
 
