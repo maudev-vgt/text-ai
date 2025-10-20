@@ -12,7 +12,7 @@
 }
 
 #content{
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .container {
@@ -84,11 +84,15 @@ ul.pop-link li a {
 
 }
 
+.popup-version{
+    font-size: 14px;
+}
+
 footer {
     height: 200px;
-    /* position: absolute;
-    bottom: 0;
-    width: 100%; */
     background-color: #ededed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
 }

@@ -18,6 +18,8 @@ const popup = {
         library.dispachEvent('save-config', 'click', popup.saveConfig);
 
         library.currentDate();
+        
+        library.currentVersion();
 
 
     },
@@ -139,15 +141,11 @@ const popup = {
         browser.runtime.reload();
 
 
-    }
-    // currentDate() {
-    //     let date = new Date();
-    //     let year = date.getFullYear();
-    //     if (document.getElementById('year')) {
-    //         document.getElementById('year').innerHTML = year;
+    },
+    setAppVersion(){
 
-    //     }
-    // }
+    }
+   
 };
 
 

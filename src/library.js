@@ -89,6 +89,21 @@ const library = {
 
         }
     },
+    async currentVersion() {
+        
+        let response = await fetch(browser.runtime.getURL('manifest.json'));
+        
+        if(response.ok){
+            
+            let results  = await response.json();
+            let { version } = results;
+
+            document.getElementById('app-version').innerHTML = version
+
+        }
+
+
+    },
     dispachEvent(selector, event, handler) {
 
         const el = document.getElementById(selector);
@@ -99,6 +114,7 @@ const library = {
     labelParse(text) {
         return text.charAt(0).toUpperCase() + text.slice(1);
     }
+
 };
 
 (function () {
