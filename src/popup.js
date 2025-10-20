@@ -1,5 +1,4 @@
 const popup = {
-
     init: () => {
 
         // load user data
@@ -86,7 +85,7 @@ const popup = {
         popup.getData('groq_token').then(function (res) {
 
             if (res.groq_token) {
-                document.getElementById('groq-token-config').value = res.groq_token;
+                document.getElementById('groq-token-config').value = helper.encryptDecryptString(res.groq_token, true);
             }
 
         });
@@ -114,7 +113,8 @@ const popup = {
 
         if (input.value.length > 0) {
 
-            popup.saveData('groq_token', input.value);
+            popup.saveData('groq_token', helper.encryptDecryptString(input.value));
+            // popup.saveData('groq_token', btoa(input.value));
             popup.saveData('action', 'improve');
             browser.runtime.reload();
         }
@@ -142,17 +142,17 @@ const popup = {
         let token = document.getElementById('groq-token-config');
         let language = document.getElementById('language');
 
-        popup.saveData('groq_token', token.value);
+        popup.saveData('groq_token', btoa(token.value));
         popup.saveData('language', language.value);
 
         browser.runtime.reload();
 
 
     },
-    currentDate(){
+    currentDate() {
         let date = new Date();
         let year = date.getFullYear();
-        if(document.getElementById('year')){
+        if (document.getElementById('year')) {
             document.getElementById('year').innerHTML = year;
 
         }

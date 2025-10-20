@@ -1,17 +1,16 @@
+const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
+const groqModel = "llama-3.1-8b-instant";
+
 browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
-  const groqUrl = "https://api.groq.com/openai/v1/chat/completions";
-  const groqModel = "llama-3.1-8b-instant";
 
   if (msg.action === 'improve') {
     browser.storage.local.get('action').then(function (action) {
       browser.storage.local.get('groq_token').then(function (token) {
 
-        let selection = getSelectedText();
+        let selection = helper.getSelectedText();
 
-        // let instructions = getInstructions(action.action);
-
-        getInstructions(action.action).then(function (instructions) {
+        helper.getInstructions(action.action).then(function (instructions) {
 
 
           let systemMessage = [
@@ -24,12 +23,13 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           }]
 
           let messages = [...systemMessage, ...userMessage];
+  
 
           let options = {
             method: "post",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token.groq_token}`
+              "Authorization": `Bearer ${helper.encryptDecryptString(token.groq_token, true)}`
             },
             body: JSON.stringify({
               "messages": messages,
@@ -44,7 +44,7 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
           }
 
 
-          makeRequest(options, groqUrl).then(function (res) {
+          helper.makeRequest(options, groqUrl).then(function (res) {
 
             let response = res.choices[0].message;
 
@@ -67,64 +67,97 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 });
 
-async function makeRequest(options, url) {
+document.addEventListener("mouseup", (e) => {
+  const selection = helper.getSelectedText();
+  if (!selection) return;
 
-  let results = await fetch(url, options);
-  let response = await results.json();
+  let oldMenu = document.querySelector(".mini-menu");
+  if (oldMenu) oldMenu.remove();
 
-  return response;
+  const menu = document.createElement("div");
+  
+  menu.className = "mini-menu";
+  menu.innerHTML = `
+  <img src="${browser.runtime.getURL('mind.png')}" 
+       style="width:16px; height:16px; vertical-align:middle; margin-right:5px;">
+  <span>Pergunte ao TextAi</span>
+  `;
+  
+  menu.style.position = "absolute";
+  menu.style.top = `${e.pageY + 5}px`;
+  menu.style.left = `${e.pageX + 5}px`;
+  menu.style.background = "#333";
+  menu.style.color = "#fff";
+  menu.style.padding = "5px 10px";
+  menu.style.borderRadius = "6px";
+  menu.style.cursor = "pointer";
+  menu.style.zIndex = "999999";
+  menu.style.fontFamily = "sans-serif";
 
-}
+  menu.addEventListener("click", () => {
 
-async function getInstructions(action) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "pt-BR";
+    recognition.start();
 
-  return browser.storage.local.get('i18n').then(function (res) {
+    recognition.onresult = (event) => {
+      browser.storage.local.get('groq_token').then(function (token) {
+        const text = event.results[0][0].transcript;
 
-    let { i18n } = res;
-    let translate = JSON.parse(i18n);
+        console.log(text);
 
-    let text = '';
+        let systemMessage = [
+          { "role": "system", "content": text }
+        ];
 
-    console.log(action)
+        let userMessage = [{
+          "role": "user",
+          "content": selection
+        }]
 
-    switch (action) {
-      case 'improve': {
-        text = translate['improve_instruction'];
-        break;
-      }
-      case 'translate': {
+        let messages = [...systemMessage, ...userMessage];
 
-        text = translate['translate_instruction'];
-        break;
-      }
-      case 'explain': {
-        text = translate['explain_instruction'];
-        break;
-      }
+        let options = {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${helper.encryptDecryptString(token.groq_token, true)}`
+          },
+          body: JSON.stringify({
+            "messages": messages,
+            "temperature": 0.5,
+            "model": groqModel,
+            "stop": null,
+            "stream": false
 
-
-    }
-
-    return text + translate['general_instruction'];
-
-  })
-
-
-
-}
-
-
-function getSelectedText() {
-  const activeEl = document.activeElement
-
-  if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
-    return activeEl.value.substring(activeEl.selectionStart, activeEl.selectionEnd);
-  } else {
-    return window.getSelection().toString();
-  }
-
-}
+          })
 
 
+        }
+
+
+        helper.makeRequest(options, groqUrl).then(function (res) {
+
+          let response = res.choices[0].message;
+
+          alert(response.content);
+
+          menu.remove();
+        });
+
+
+      });
+    };
+
+  });
+
+  document.body.appendChild(menu);
+});
+
+document.addEventListener("mousedown", (e) => {
+  const menu = document.querySelector(".mini-menu");
+  if (menu && !menu.contains(e.target)) menu.remove();
+});
 
 
