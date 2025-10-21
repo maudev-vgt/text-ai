@@ -1,14 +1,14 @@
 {
   "manifest_version": 2,
   "name": "TextAI",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Enhance and refine your texts with artificial intelligence",
   "icons": {
-    "48": "mind.png"
+    "48": "mind_48.png"
   },
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "mind.png"
+    "default_icon": "mind_48.png"
   },
   "permissions": ["tabs", "storage", "activeTab", "scripting", "https://api.groq.com/*", "menus", "notifications"],
   "content_scripts": [
