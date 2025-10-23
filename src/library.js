@@ -113,6 +113,24 @@ const library = {
     },
     labelParse(text) {
         return text.charAt(0).toUpperCase() + text.slice(1);
+    },
+    loading(container, load){
+
+        let spinner = document.createElement('span')
+        spinner.classList.add('loading');
+
+        let gifLoading = document.createElement('img')
+        gifLoading.setAttribute('src', 'spinner.gif');
+
+        spinner.appendChild(gifLoading);
+
+        if(load){
+
+            document.getElementById(container).appendChild(spinner);
+            // document.getElementById(container).appendChild('<span class="loading"><img src="spinner.gif" alt=""></span>');
+        }
+
+
     }
 
 };

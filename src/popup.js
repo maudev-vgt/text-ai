@@ -103,42 +103,69 @@ const popup = {
     // },
     setToken() {
 
-        let input = document.getElementById('groq-token');
+        library.loading('welcome', true);
 
-        if (input.value.length > 0) {
+        setTimeout(function(){
+            
+            let input = document.getElementById('groq-token');
 
-            library.saveData('groq_token', library.encryptDecryptString(input.value));
-            library.saveData('action', 'improve');
-            browser.runtime.reload();
-        }
-        else {
-            input.classList.add('is-invalid')
-        }
+            if (input.value.length > 0) {
+
+                library.saveData('groq_token', library.encryptDecryptString(input.value));
+                library.saveData('action', 'improve');
+                browser.runtime.reload();
+            }
+            else {
+                input.classList.add('is-invalid');
+
+                library.loading('main', false);
+            }
+
+        },1000);
+
+
 
     },
     setAction() {
 
-        let selector = document.querySelectorAll('.selector');
+        library.loading('main', true);
 
-        selector.forEach(function (el) {
-            if (el.checked) {
+        setTimeout(function(){
 
-                library.saveData('action', el.value)
+            let selector = document.querySelectorAll('.selector');
 
-            }
-        });
+            selector.forEach(function (el) {
+                if (el.checked) {
 
-        browser.runtime.reload();
+                    library.saveData('action', el.value)
+
+                }
+            });
+
+            browser.runtime.reload();
+
+        }, 1000)
+
+
+
     },
     saveConfig() {
 
-        let token = document.getElementById('groq-token-config');
-        let language = document.getElementById('language');
+        library.loading('content', true);
 
-        library.saveData('groq_token', btoa(token.value));
-        library.saveData('language', language.value);
+        setTimeout(function(){
 
-        browser.runtime.reload();
+            let token = document.getElementById('groq-token-config');
+            let language = document.getElementById('language');
+            
+            library.saveData('groq_token', btoa(token.value));
+            library.saveData('language', language.value);
+            
+            browser.runtime.reload();
+            
+            library.loading('content', false);
+            
+        },1000);
 
 
     },

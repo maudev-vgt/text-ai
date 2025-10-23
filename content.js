@@ -4,14 +4,13 @@ const groqModel = "llama-3.1-8b-instant";
 browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
 
-  if (msg.action === 'improve') {
+  if (msg.action === 'improve') {    
     browser.storage.local.get('action').then(function (action) {
       browser.storage.local.get('groq_token').then(function (token) {
-
+      
         let selection = library.getSelectedText();
 
         library.getInstructions(action.action).then(function (instructions) {
-
 
           let systemMessage = [
             { "role": "system", "content": instructions }
@@ -43,21 +42,23 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 
           }
 
-
           library.makeRequest(options, groqUrl).then(function (res) {
-
+            
             let response = res.choices[0].message;
-
+            
             alert(response.content);
-
+            
             sendResponse({ ok: true });
 
-          });
+
+          }).catch(function(err){
+
+            alert('Inválid token');
+
+          })
 
 
         })
-
-
 
       });
 
